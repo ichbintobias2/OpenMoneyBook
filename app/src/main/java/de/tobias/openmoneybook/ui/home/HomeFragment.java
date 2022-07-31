@@ -4,13 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import de.tobias.openmoneybook.R;
 import de.tobias.openmoneybook.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
@@ -23,8 +21,15 @@ public class HomeFragment extends Fragment {
 		binding = FragmentHomeBinding.inflate(inflater, container, false);
 		View root = binding.getRoot();
 		
-		final TextView textView = binding.textHome;
-		homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+		final TextView titleText = binding.textView;
+		homeViewModel.getTitleText().observe(getViewLifecycleOwner(), titleText::setText);
+		
+		final TextView centerText = binding.centerText;
+		homeViewModel.getBalanceText().observe(getViewLifecycleOwner(), centerText::setText);
+		
+		final ProgressBar pBarSpent = binding.statsProgressbar;
+		homeViewModel.getProgress().observe(getViewLifecycleOwner(), pBarSpent::setProgress);
+		
 		return root;
 	}
 	
